@@ -1,0 +1,9 @@
+[
+{"id":"f1","type":"tab","label":"IR Blaster FOTA","disabled":false},
+{"id":"b1","type":"mqtt-broker","name":"EMQX Serverless","broker":"xxxx.emqxsl.com","port":"8883","tls":"","clientid":"nodered-fota","autoConnect":true,"usetls":true,"protocolVersion":"4","keepalive":"60","cleansession":true},
+{"id":"i1","type":"inject","z":"f1","name":"Gui lenh OTA","props":[{"p":"payload"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"","payloadType":"date","x":140,"y":80,"wires":[["fn1"]]},
+{"id":"fn1","type":"function","z":"f1","name":"Tao lenh OTA","func":"const devId = \"irb-A1B2C3D4E5F6\";   // Device ID in ra tu Serial Monitor\nconst version = \"1.0.1\";\nconst url = \"https://github.com/USER/ir-blaster-fota/releases/download/v1.0.1/firmware.bin\";\nmsg.topic = `ir/${devId}/cmd/ota`;\nmsg.payload = { version, url };\nmsg.qos = 1;\nreturn msg;","outputs":1,"x":330,"y":80,"wires":[["m1"]]},
+{"id":"m1","type":"mqtt out","z":"f1","name":"","topic":"","qos":"1","retain":"false","broker":"b1","x":530,"y":80,"wires":[]},
+{"id":"m2","type":"mqtt in","z":"f1","name":"","topic":"ir/+/status","qos":"1","datatype":"json","broker":"b1","nl":false,"rap":true,"rh":0,"inputs":0,"x":150,"y":160,"wires":[["d1"]]},
+{"id":"d1","type":"debug","z":"f1","name":"Trang thai thiet bi","active":true,"tosidebar":true,"complete":"payload","x":370,"y":160,"wires":[]}
+]
