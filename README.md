@@ -107,7 +107,7 @@ flowchart TD
 
 | Tên linh kiện | Thông số kỹ thuật | Số lượng | Vai trò trong hệ thống |
 |:---|:---|:---:|:---|
-| **Mạch ESP32-C3 Super Mini** | Vi xử lý RISC-V 32-bit 160MHz, 4MB Flash, Wi-Fi 2.4GHz + BLE | 1 mạch | Khối điều khiển trung tâm và xử lý mạng |
+| **Mạch ESP32-C3 Super Mini Zero** | Vi xử lý RISC-V 32-bit 160MHz, 4MB Flash, Wi-Fi 2.4GHz + BLE | 1 mạch | Khối điều khiển trung tâm và xử lý mạng |
 | **LED phát hồng ngoại 940nm** | Bước sóng 940nm, góc phát rộng | 1 chiếc | Phát tín hiệu điều khiển thiết bị |
 | **Transistor NPN C828 + Trở 1kΩ** | Transistor chuyển mạch khuếch đại dòng | 1 bộ | Mạch đệm dòng lái LED phát IR đạt cự ly xa |
 | **Mắt thu hồng ngoại VS1838B** | Tần số sóng mang 38kHz, tích hợp mạch lọc giải điều chế | 1 chiếc | Nhận và học tín hiệu từ remote gốc |
