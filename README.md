@@ -1,158 +1,173 @@
 # Universal Smart IR Blaster & Climate Monitor (Zero-Brick FOTA Hub)
 
-[![Platform: ESP32-C3](https://img.shields.io/badge/Platform-ESP32--C3-red.svg)](https://www.espressif.com/)
-[![Framework: Arduino / PlatformIO](https://img.shields.io/badge/Framework-PlatformIO%20%2F%20Arduino-orange.svg)](https://platformio.org/)
-[![Protocol: MQTT over TLS](https://img.shields.io/badge/Protocol-MQTT%20TLS%208883-blue.svg)](https://www.emqx.com/)
+[![Nền tảng: ESP32-C3](https://img.shields.io/badge/Ph%E1%BA%A7n%20c%E1%BB%A9ng-ESP32--C3%20Super%20Mini-red.svg)](https://www.espressif.com/)
+[![Môi trường: PlatformIO](https://img.shields.io/badge/Framework-PlatformIO%20%2F%20Arduino-orange.svg)](https://platformio.org/)
+[![Giao thức: MQTT TLS](https://img.shields.io/badge/Giao%20th%E1%BB%A9c-MQTT%20TLS%208883-blue.svg)](https://www.emqx.com/)
 [![Dashboard: Node-RED](https://img.shields.io/badge/UI-Node--RED%20Dashboard-red.svg)](https://nodered.org/)
-[![License: Proprietary / Academic](https://img.shields.io/badge/License-Proprietary%20%2F%20Academic-lightgrey.svg)](#14-license--confidentiality-notice)
+[![Bản quyền: Đề tài Học thuật](https://img.shields.io/badge/B%E1%BA%A3n%20quy%E1%BB%81n-Academic%20Project-green.svg)](#14-bản-quyền-và-chính-sách-mã-nguồn)
 
 ---
 
-## 1. Project Title
+## 1. Thông Tin Đề Tài
 
-**Universal Smart IR Blaster & Climate Monitor (Zero-Brick FOTA Hub)**  
-*Thiết bị Điều khiển Hồng ngoại Thông minh 2 Chiều & Giám sát Môi trường Tích hợp Cập nhật Firmware An toàn*
-
-* **Course / Project:** Báo cáo & Đề xuất Đề tài Giữa kỳ môn Internet of Things (IoT)
-* **Author / Developer:** Nguyễn Hoàng Đức ([@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc))
-* **Instructor:** Thầy Anh Tuấn Nguyễn
-* **Public Repository:** [https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote](https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote)
+* **Tên đề tài:** Thiết bị Điều khiển Hồng ngoại Thông minh Đa năng 2 Chiều & Giám sát Môi trường Tích hợp Cập nhật Firmware An toàn (Universal Smart IR Blaster & Climate Monitor — Zero-Brick FOTA Hub).
+* **Môn học:** Internet of Things (IoT) — Báo cáo & Đề xuất Đề tài Giữa kỳ (Thang điểm 20).
+* **Sinh viên thực hiện:** Nguyễn Hoàng Đức ([@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc)).
+* **Giảng viên hướng dẫn:** Thầy Anh Tuấn Nguyễn.
+* **Kho lưu trữ công khai (Public Repo):** [https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote](https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote)
 
 ---
 
-## 2. Professional Project Overview
+## 2. Tổng Quan Dự Án
 
-The **Universal Smart IR Blaster & Climate Monitor** is an industrial-grade, dual-mode IoT edge controller built on the ESP32-C3 RISC-V architecture. The system bridges the gap between conventional legacy home appliances (air conditioners, televisions, fans, audio systems) and modern cloud-managed smart building environments.
+**Universal Smart IR Blaster & Climate Monitor** là thiết bị IoT biên (Edge Device) được phát triển trên vi điều khiển kiến trúc RISC-V **ESP32-C3 Super Mini**. Dự án giải quyết bài toán kết nối mạng cho các thiết bị điện gia dụng truyền thống (điều hòa không khí, tivi, quạt điện, máy âm thanh) vào hệ sinh thái nhà thông minh mà không cần thay mới phần cứng thiết bị gia dụng.
 
-The device operates concurrently in two operating paradigms:
-1. **Standalone Handheld Remote Control:** Equipped with tactile buttons and local Non-Volatile Flash Storage (LittleFS), allowing instantaneous execution of learned appliance commands and physical IR code capture without an active internet connection.
-2. **Cloud IoT Edge Gateway:** Synchronized with an online MQTT message broker over encrypted TLS (Port 8883) and integrated with a Node-RED responsive dashboard, enabling bidirectional remote telemetry, automated climate-driven controls, and secure firmware lifecycle management.
+Hệ thống hoạt động đồng thời trên hai chế độ độc lập:
+1. **Remote cầm tay vật lý (Offline Mode):** Trang bị 6 nút bấm cơ học, cho phép học lệnh trực tiếp từ remote gốc và lưu trữ vĩnh viễn vào bộ nhớ Flash nội tại (LittleFS). Người dùng có thể cầm bấm điều khiển ngay tại chỗ với độ trễ bằng 0 mà không phụ thuộc vào kết nối Internet.
+2. **Cổng kết nối IoT đám mây (Cloud Gateway Mode):** Đồng bộ liên tục qua giao thức MQTT mã hóa TLS (Port 8883) về máy chủ EMQX Cloud Serverless. Toàn bộ thao tác giám sát nhiệt độ/độ ẩm từ cảm biến DHT11 và điều khiển thiết bị được quản lý trực quan qua giao diện Node-RED Dashboard trên máy tính và điện thoại thông minh.
 
-A core innovation of this project is its **Zero-Brick Remote Firmware Upgrade (FOTA) Engine**, which combines dual-partition flash rollback with visual optical feedback governed by human psychophysics (the Weber-Fechner law).
-
----
-
-## 3. Project Motivation & Problem Statement
-
-### Practical Problems in Modern Smart Homes:
-1. **Appliance Remote Proliferation & Fragmentation:**  
-   A typical household operates 4 to 8 distinct infrared remote controls. This fragmentation causes regular friction due to misplaced remotes, degraded batteries, and cluttered living spaces.
-2. **Obsolete Non-Connected Household Appliances:**  
-   Millions of high-power, reliable appliances (such as split-unit air conditioners and standing fans) lack internet interfaces. Replacing functional appliances solely for IoT integration is economically and ecologically wasteful.
-3. **Firmware Brick Risk in Edge IoT Deployments:**  
-   Standard DIY and consumer-grade ESP32 projects frequently experience unrecoverable bricking during Over-The-Air (OTA) updates when subjected to power interruptions, incomplete downloads, or erroneous firmware builds lacking verified fallback partitions.
-
-### Proposed Solution:
-This project delivers a robust, compact, and affordable edge device that non-invasively retrofits legacy IR appliances, measures real-time ambient environment metrics (temperature and humidity), and guarantees uninterrupted operational uptime through verified cryptographic FOTA rollback protections.
+Điểm đột phá của dự án là cơ chế **Cập nhật Firmware qua mạng an toàn (Zero-Brick FOTA)** kết hợp kiểm tra toàn vẹn băm mật mã SHA256, tự động hoàn nguyên (Rollback) khi gặp sự cố, và hiệu ứng chỉ báo trạng thái LED RGB được nắn theo **Định luật sinh lý thị giác Weber-Fechner**.
 
 ---
 
-## 4. System Architecture Overview
+## 3. Đặt Bài Toán & Nhu Cầu Thực Tế
 
-The system architecture spans physical edge nodes, cloud message routing, and client presentation layers:
+### 3.1. Các vấn đề tồn tại trong thực tế:
+1. **Phân mảnh thiết bị điều khiển trong gia đình:**  
+   Mỗi phòng khách hoặc phòng ngủ thường có từ 4 đến 6 chiếc remote khác nhau (remote TV, điều hòa, quạt treo tường, đầu thu kỹ thuật số, loa soundbar...). Việc thất lạc remote, hết pin đột xuất và bừa bộn bàn trà là phiền toái xảy ra hàng ngày.
+2. **Lãng phí khi loại bỏ thiết bị cũ:**  
+   Hàng triệu máy lạnh và quạt điện thế hệ cũ vẫn hoạt động rất bền bỉ nhưng không có kết nối Wi-Fi. Việc vứt bỏ để mua thiết bị thông minh thế hệ mới gây tốn kém chi phí lớn cho người dùng và tạo ra lượng rác thải điện tử không cần thiết.
+3. **Nguy cơ lỗi "biến thành cục gạch" (Bricking) khi nâng cấp từ xa:**  
+   Các thiết bị IoT DIY hoặc giá rẻ khi nạp firmware qua Wi-Fi (OTA) nếu gặp sự cố chập chờn nguồn, rớt mạng giữa chừng hoặc file nạp bị lỗi cấu hình thường sẽ bị treo vĩnh viễn (brick), buộc người dùng phải tháo vỏ dùng dây nạp cáp USB chuyên dụng để cứu hộ.
+
+### 3.2. Mục tiêu giải pháp:
+Xây dựng một giải pháp hoàn chỉnh với chi phí linh kiện thấp, kích thước nhỏ gọn bằng bao diêm, hoạt động tin cậy, điều khiển 2 chiều mượt mà và đảm bảo firmware luôn có thể tự phục hồi an toàn trong mọi tình huống triển khai thực tế.
+
+---
+
+## 4. Sơ Đồ Khối Hệ Thống (System Architecture)
 
 ```mermaid
 flowchart TD
-    subgraph CLOUD_SERVER ["☁️ Cloud & Management Tier"]
-        ClientDevices["💻 PC Workstation / 📱 Smartphone"] <-->|"WebSockets / HTTP (/ui)"| NodeRED["Node-RED Dashboard Engine"]
-        NodeRED <-->|"MQTT over TLS (Port 8883)"| EMQX["EMQX Serverless Cloud Broker"]
-        GitHubRelease["GitHub Releases CDN"] -.->|"HTTPS Pull (firmware.bin)"| EdgeDevice
+    subgraph CLOUD_TIER ["☁️ TẦNG ĐÁM MÂY & GIÁM SÁT TRỰC QUAN"]
+        UserClients["💻 Máy tính cá nhân / 📱 Smartphone"] <-->|"WebSockets / HTTP (/ui)"| NodeRED["Node-RED Dashboard Engine"]
+        NodeRED <-->|"MQTT qua TLS 8883"| EMQX["EMQX Serverless Cloud Broker"]
+        GitHubReleases["GitHub Releases (CDN)"] -.->|"HTTPS Tải firmware.bin"| ESP32Core
     end
 
-    subgraph EdgeDevice ["⚡ IoT Hardware Core (ESP32-C3 RISC-V)"]
-        NetManager["Network & TLS Security Manager"] <--> FOTAManager["Anti-Brick FOTA Engine"]
-        NetManager <--> IRController["IR Blaster & Learner Core"]
-        NetManager <--> SensorTask["Environmental Telemetry Task"]
+    subgraph HARDWARE_TIER ["⚡ THIẾT BỊ PHẦN CỨNG (ESP32-C3 SUPER MINI)"]
+        NetManager["Network & Security Manager"] <--> FOTAEngine["Anti-Brick FOTA Engine"]
+        NetManager <--> IRCtrl["Bộ Xử Lý Hồng Ngoại (IR Core)"]
+        NetManager <--> Telemetry["Tác vụ Thu thập Dữ liệu Cảm biến"]
 
-        SensorTask -->|"1-Wire (GPIO 9)"| DHT11Sensor["🌡️ DHT11 Sensor"]
+        Telemetry -->|"Giao tiếp 1-Wire (GPIO 9)"| DHTSensor["🌡️ Cảm biến DHT11 (Nhiệt độ & Độ ẩm)"]
         
-        IRController -->|"PWM 38kHz (GPIO 6)"| IRTransmitter["📡 IR LED (NPN C828 Driver)"]
-        IRReceiver["📻 VS1838B IR Receiver"] -->|"Data (GPIO 7)"| IRController
-        IRController -->|"GND/VCC Switch (GPIO 8)"| IRReceiver
-        IRController <-->|"LittleFS VFS"| FlashMemory["💾 4 Profiles x 5 Command Slots"]
+        IRCtrl -->|"Phát xung PWM 38kHz (GPIO 6)"| IRTransmitter["📡 LED Phát IR (Đệm Transistor C828)"]
+        IRReceiver["📻 Mắt nhận IR VS1838B"] -->|"Đọc tín hiệu Data (GPIO 7)"| IRCtrl
+        IRCtrl -->|"Đóng ngắt nguồn VCC/GND (GPIO 8)"| IRReceiver
+        IRCtrl <-->|"Hệ thống tập tin LittleFS"| FlashStorage["💾 Lưu trữ 4 Profile x 5 Slot"]
 
-        FOTAManager -->|"Fechner Visual Curve (GPIO 10)"| WS2812["💡 Onboard WS2812 RGB LED"]
+        FOTAEngine -->|"Nắn độ sáng Weber-Fechner (GPIO 10)"| RGBLED["💡 LED RGB WS2812 Onboard"]
         
-        PhysicalButtons["🔘 6x Physical Buttons (GPIO 4, 3, 2, 1, 5, 0)"] -->|"Debounce / 1.5s Hold"| ButtonManager["Button Management Task"]
-        ButtonManager --> IRController
+        Buttons["🔘 6 Nút nhấn vật lý (GPIO 4, 3, 2, 1, 5, 0)"] -->|"Chống rung phím / Giữ 1.5s"| BtnManager["Trình Quản Lý Nút Nhấn"]
+        BtnManager --> IRCtrl
     end
 
-    subgraph APPLIANCES ["🏠 Ambient Appliances"]
-        IRTransmitter -.->|"Infrared Light (940nm)"| AirConditioner["❄️ Air Conditioner (Daikin, Panasonic, Gree)"]
-        IRTransmitter -.->|"Infrared Light (940nm)"| Television["📺 Smart / Legacy TV (Sony, Samsung, LG)"]
-        IRTransmitter -.->|"Infrared Light (940nm)"| ElectricFan["🌀 Standing Fan"]
-        OriginalRemote["🎮 Original Appliance Remote"] -.->|"Raw / Protocol Capture"| IRReceiver
+    subgraph APPLIANCES ["🏠 THIẾT BỊ ĐIỆN TRONG PHÒNG"]
+        IRTransmitter -.->|"Tia hồng ngoại 940nm"| AC["❄️ Máy lạnh / Điều hòa nhiệt độ"]
+        IRTransmitter -.->|"Tia hồng ngoại 940nm"| TV["📺 Tivi / Màn hình trình chiếu"]
+        IRTransmitter -.->|"Tia hồng ngoại 940nm"| Fan["🌀 Quạt điện"]
+        RealRemote["🎮 Remote gốc của nhà sản xuất"] -.->|"Học mã trực tiếp"| IRReceiver
     end
 ```
 
 ---
 
-## 5. Key Verified Features
+## 5. Tính Năng Kỹ Thuật Đột Phá
 
-* **Hybrid Dual-Path Control:** Seamless switching between manual tactile operation (6 physical micro-switches) and cloud-driven commands from any web browser.
-* **Universal Multi-Protocol IR Engine:** Supports standard consumer decoding (NEC, Sony SIRC, RC5/6, Samsung) and handles long raw pulse sequences (up to 700 timings) for complex HVAC remote protocols (Panasonic, Daikin, Mitsubishi).
-* **Multi-Profile Storage:** Stores 4 distinct appliance profiles (Profile 0: TV, Profile 1: AC, Profile 2: Fan, Profile 3: Custom) with 5 independent command slots per profile in persistent LittleFS flash storage.
-* **On-Demand Power-Gated IR Learning:** The IR receiving eye is power-switched via GPIO 8 only during active learning sessions (10-second timeout), eliminating optical interference and reducing power consumption.
-* **Zero-Brick HTTPS FOTA with Rollback:** Dual-partition (`app0` / `app1`) flash design. Validates cryptographic SHA256 image checksums before activation. Enforces a 180-second post-flash health verification timer: if the new firmware fails to sustain network integrity, the bootloader automatically reverts to the previous stable release.
-* **Psychophysically Calibrated Optical Indicator:** Single-wire WS2812 RGB LED calibrated to the Weber-Fechner law ($PWM = 254 \times (\% / 100)^{2.4} + 1$) to provide truly linear brightness perception during OTA downloads, WiFi handshakes, and IR operations.
-* **Real-Time Climate Telemetry:** Periodic acquisition of room temperature and relative humidity via a DHT11 sensor with automatic publication over MQTT.
+* **Điều khiển lai 2 chiều (Hybrid Dual-Control):** Có thể sử dụng như chiếc remote cầm tay độc lập qua 6 nút nhấn hoặc điều khiển qua mạng từ bảng điều khiển Node-RED Dashboard.
+* **Bộ giải mã và phát xung hồng ngoại vạn năng:** Hỗ trợ giải mã các giao thức dân dụng phổ biến (NEC, Sony SIRC, Philips RC5/6, Samsung) và cơ chế bắt chuỗi xung thô (**RAW pulse train lên tới 700 mẫu xung**) dành cho các dòng máy lạnh phức tạp (Daikin, Panasonic, Mitsubishi, Gree).
+* **Quản trị 4 Profile thiết bị đa năng:** Lưu trữ 4 profile độc lập (Profile 0: Tivi, Profile 1: Điều hòa, Profile 2: Quạt điện, Profile 3: Thiết bị khác). Mỗi profile quản lý 5 nút lệnh (Slot 0 đến Slot 4) lưu trực tiếp vào bộ nhớ flash LittleFS.
+* **Cơ chế cấp nguồn thông minh cho mắt thu IR (Power Gating):** Mắt thu hồng ngoại 1838 chỉ được cấp nguồn qua chân GPIO 8 khi kích hoạt chế độ học lệnh (giới hạn thời gian chờ 10 giây). Điều này giúp triệt tiêu hiện tượng nhiễu quang học từ môi trường và tiết kiệm năng lượng.
+* **Cơ chế Cập nhật FOTA Chống Biến Thành Cục Gạch (Zero-Brick Rollback):**
+  * Tận dụng bảng phân vùng 2 slot OTA (`app0` và `app1`).
+  * Tải firmware qua luồng mã hóa HTTPS và tính toán băm SHA256 từng khối dữ liệu trong khi nạp.
+  * Chỉ khi mã SHA256 khớp tuyệt đối với tham số chỉ định thì thiết bị mới hoán đổi phân vùng khởi động.
+  * Kích hoạt bộ đếm thời gian an toàn 180 giây sau khởi động: nếu firmware mới bị lỗi crash, tràn bộ nhớ hoặc mất kết nối mạng, bootloader sẽ **tự động hoàn nguyên (Rollback) về bản firmware cũ ổn định trước đó**.
+* **Chỉ báo trực quan LED RGB chuẩn sinh lý thị giác Weber-Fechner:**
+  * Cảm nhận độ sáng của mắt người đối với ánh sáng tuân theo quy luật phi tuyến $S = k \cdot \ln(I)$.
+  * Dự án áp dụng công thức nắn mức độ sáng thực nghiệm: $\text{PWM} = 254 \times (\text{Percent} / 100)^{2.4} + 1$.
+  * Nhờ đó, hiệu ứng LED RGB khi tải tiến độ OTA (0% đến 100%) hoặc nhịp thở trạng thái đạt độ chuyển tiếp tăng sáng cực kỳ mượt mà.
 
 ---
 
-## 6. Hardware Specifications & Pin Configuration
+## 6. Danh Mục Phần Cứng & Sơ Đồ Đấu Nối GPIO
 
-| Component | Hardware Specification | ESP32-C3 Pin | Functional Role |
+### 6.1. Bảng linh kiện phần cứng thật:
+
+| Tên linh kiện | Thông số kỹ thuật | Số lượng | Vai trò trong hệ thống |
 |:---|:---|:---:|:---|
-| **Microcontroller** | ESP32-C3 Super Mini (RISC-V @ 160MHz, 4MB Flash) | — | Main System SoC |
-| **IR Transmitter** | 940nm High-Power IR LED driven by NPN C828 Transistor | `GPIO 6` | 38kHz Carrier Pulse Generation |
-| **IR Receiver** | VS1838B Photoreceiver (38kHz Optical Demodulator) | `GPIO 7` | Incoming Signal Demodulation |
-| **IR Power Switch** | Transistor / Low-Side Switch for IR Receiver | `GPIO 8` | Dynamic Power Gating for Learner |
-| **Status Indicator** | Addressable WS2812 NeoPixel RGB LED | `GPIO 10` | Non-blocking Optical Feedback |
-| **Climate Sensor** | DHT11 Digital Temperature & Humidity Sensor | `GPIO 9` | 1-Wire Environmental Telemetry |
-| **Button N1** | SPST Tactile Push Button | `GPIO 4` | Slot 0 Send / Hold 1.5s Learn |
-| **Button N2** | SPST Tactile Push Button | `GPIO 3` | Slot 1 Send / Hold 1.5s Learn |
-| **Button N3** | SPST Tactile Push Button | `GPIO 2` | Slot 2 Send / Hold 1.5s Learn |
-| **Button N4** | SPST Tactile Push Button | `GPIO 1` | Slot 3 Send / Hold 1.5s Learn |
-| **Button ON/OFF** | SPST Tactile Push Button | `GPIO 5` | Slot 4 (Power Toggle) |
-| **Button FUNC** | SPST Tactile Push Button | `GPIO 0` | Profile Cycling (0 → 1 → 2 → 3) |
+| **Mạch ESP32-C3 Super Mini** | Vi xử lý RISC-V 32-bit 160MHz, 4MB Flash, Wi-Fi 2.4GHz + BLE | 1 mạch | Khối điều khiển trung tâm và xử lý mạng |
+| **LED phát hồng ngoại 940nm** | Bước sóng 940nm, góc phát rộng | 1 chiếc | Phát tín hiệu điều khiển thiết bị |
+| **Transistor NPN C828 + Trở 1kΩ** | Transistor chuyển mạch khuếch đại dòng | 1 bộ | Mạch đệm dòng lái LED phát IR đạt cự ly xa |
+| **Mắt thu hồng ngoại VS1838B** | Tần số sóng mang 38kHz, tích hợp mạch lọc giải điều chế | 1 chiếc | Nhận và học tín hiệu từ remote gốc |
+| **Cảm biến nhiệt độ & độ ẩm DHT11** | Dải nhiệt 0-50°C, dải ẩm 20-90% RH | 1 chiếc | Giám sát môi trường phòng theo thời gian thực |
+| **Đèn LED RGB WS2812** | LED kỹ thuật số tích hợp sẵn trên bo mạch | 1 chiếc | Hiển thị trạng thái hoạt động và tiến độ FOTA |
+| **Nút bấm cơ học (Tactile Switch)** | Nút nhấn nhả micro switch loại 4 chân/2 chân | 6 chiếc | Cụm nút bấm vật lý điều khiển và học lệnh |
 
----
+### 6.2. Bảng phân bổ chân GPIO trên ESP32-C3:
 
-## 7. Technology Stack
-
-* **Firmware Runtime:** C++ (ESP32 Arduino Core 3.x / FreeRTOS).
-* **Development Environment:** PlatformIO Core (VSCode IDE / CLI).
-* **Communication Middleware:** PubSubClient with WiFiClientSecure (TLS 1.2/1.3).
-* **Cryptographic Verification:** MbedTLS (SHA256 hardware accelerated).
-* **Flash Storage Subsystem:** LittleFS Virtual File System.
-* **Infrared Protocol Library:** IRremoteESP8266 (optimized for ESP32-C3).
-* **Cloud Broker:** EMQX Serverless Cloud Broker (`8883` MQTTS).
-* **Telemetry & Supervisory Interface:** Node-RED Engine & Node-RED Dashboard (`node-red-dashboard`).
-
----
-
-## 8. Communication Architecture & Protocol Specification
-
-### MQTT Broker Details:
-* **Host:** `xxxx.emqxsl.com` (EMQX Serverless Cloud)
-* **Port:** `8883` (SSL / TLS Encrypted)
-* **Security:** Username/Password Authentication + TLS Certificate Verification
-
-### Topic Directory:
-
-| Topic Pattern | Direction | QoS | Description |
+| Tên thiết bị / Chân nối | Chân GPIO | Chế độ cấu hình | Ý nghĩa chức năng |
 |:---|:---:|:---:|:---|
-| `ir/<DEVICE_ID>/status` | Device ➔ Cloud | 1 | Periodic health heartbeat and OTA state |
-| `ir/<DEVICE_ID>/dht` | Device ➔ Cloud | 1 | Environmental telemetry (Temp & Humidity) |
-| `ir/<DEVICE_ID>/learned` | Device ➔ Cloud | 1 | Decoded or raw captured IR telemetry |
-| `ir/<DEVICE_ID>/cmd/ir/slot` | Cloud ➔ Device | 1 | Execute transmission of configured slot |
-| `ir/<DEVICE_ID>/cmd/ir/profile`| Cloud ➔ Device | 1 | Change active appliance profile index |
-| `ir/<DEVICE_ID>/cmd/ir/learn` | Cloud ➔ Device | 1 | Activate remote learning window |
-| `ir/<DEVICE_ID>/cmd/ota` | Cloud ➔ Device | 1 | Trigger secure HTTPS firmware update |
+| **LED Phát Hồng Ngoại** | `GPIO 6` | OUTPUT (PWM 38kHz) | Bắn tín hiệu điều khiển ra không gian |
+| **Mắt Nhận Hồng Ngoại (Data)** | `GPIO 7` | INPUT | Đọc xung tín hiệu từ remote cần học |
+| **Khóa Nguồn Mắt Nhận IR** | `GPIO 8` | OUTPUT | Bật nguồn (HIGH) khi học lệnh, tắt (LOW) để chống nhiễu |
+| **Cảm biến Môi trường DHT11** | `GPIO 9` | INPUT_PULLUP (1-Wire) | Giao tiếp lấy dữ liệu nhiệt độ và độ ẩm |
+| **LED RGB WS2812 Onboard** | `GPIO 10` | OUTPUT (Single-Wire) | Chỉ báo trực quan trạng thái và tiến độ OTA |
+| **Nút Bấm N1** | `GPIO 4` | INPUT_PULLUP | Nhấn nhanh: Phát Slot 0 \| Nhấn giữ 1.5s: Học lệnh Slot 0 |
+| **Nút Bấm N2** | `GPIO 3` | INPUT_PULLUP | Nhấn nhanh: Phát Slot 1 \| Nhấn giữ 1.5s: Học lệnh Slot 1 |
+| **Nút Bấm N3** | `GPIO 2` | INPUT_PULLUP | Nhấn nhanh: Phát Slot 2 \| Nhấn giữ 1.5s: Học lệnh Slot 2 |
+| **Nút Bấm N4** | `GPIO 1` | INPUT_PULLUP | Nhấn nhanh: Phát Slot 3 \| Nhấn giữ 1.5s: Học lệnh Slot 3 |
+| **Nút Bấm ON/OFF** | `GPIO 5` | INPUT_PULLUP | Nhấn nhanh: Bật/Tắt nguồn thiết bị (Slot 4) |
+| **Nút Bấm FUNC** | `GPIO 0` | INPUT_PULLUP | Chuyển đổi tuần tự Profile thiết bị (0 ➔ 1 ➔ 2 ➔ 3) |
 
-### Sample Telemetry Payloads:
+---
 
-* **Status Heartbeat (`ir/<DEVICE_ID>/status`):**
+## 7. Ngăn Xếp Công Nghệ (Technology Stack)
+
+* **Ngôn ngữ lập trình:** C++ chuẩn cho hệ thống nhúng (ESP32 Arduino Core 3.x trên nền tảng FreeRTOS).
+* **Môi trường phát triển:** PlatformIO Core trên Visual Studio Code.
+* **Giao thức truyền thông:** MQTT Client (`PubSubClient`) kết hợp với `WiFiClientSecure` (Mã hóa SSL/TLS 1.2/1.3).
+* **Mã hóa xác thực:** Tăng tốc phần cứng MbedTLS SHA-256.
+* **Lưu trữ dữ liệu:** LittleFS Virtual File System trên phân vùng Flash nội tại.
+* **Xử lý tín hiệu IR:** Thư viện mã nguồn mở `IRremoteESP8266` tối ưu cho lõi vi xử lý RISC-V ESP32-C3.
+* **Máy chủ môi giới tin nhắn:** EMQX Serverless Cloud Broker (Cổng bảo mật `8883` MQTTS).
+* **Giao diện điều khiển & Giám sát:** Node-RED Engine và Node-RED Dashboard (`node-red-dashboard`).
+
+---
+
+## 8. Kiến Trúc Truyền Thông & Danh Mục MQTT Topics
+
+### 8.1. Thông số kết nối Cloud Broker:
+* **Địa chỉ Broker:** `xxxx.emqxsl.com` (EMQX Serverless Cloud)
+* **Cổng dịch vụ:** `8883` (Bảo mật TLS có mã hóa)
+* **Định danh Client ID:** Tự động tạo theo định dạng `irb-<MAC_ADDRESS>` duy nhất cho từng bo mạch.
+
+### 8.2. Danh mục Topic định tuyến:
+
+| MQTT Topic | Chiều truyền | Mức QoS | Chức năng chi tiết |
+|:---|:---:|:---:|:---|
+| `ir/<DEVICE_ID>/status` | Thiết bị ➔ Cloud | 1 | Gửi nhịp tim định kỳ, thông số Wi-Fi, bộ nhớ RAM và trạng thái OTA |
+| `ir/<DEVICE_ID>/dht` | Thiết bị ➔ Cloud | 1 | Gửi kết quả đo đạc chu kỳ từ cảm biến nhiệt độ & độ ẩm |
+| `ir/<DEVICE_ID>/learned` | Thiết bị ➔ Cloud | 1 | Báo cáo chi tiết mã lệnh (Giao thức, Hex Code, Bits, Mảng RAW) vừa học |
+| `ir/<DEVICE_ID>/cmd/ir/slot` | Cloud ➔ Thiết bị | 1 | Lệnh kích hoạt phát xung lệnh từ xa theo chỉ mục Slot (0 đến 4) |
+| `ir/<DEVICE_ID>/cmd/ir/profile` | Cloud ➔ Thiết bị | 1 | Lệnh thay đổi Profile thiết bị đang chọn (0 đến 3) |
+| `ir/<DEVICE_ID>/cmd/ir/learn` | Cloud ➔ Thiết bị | 1 | Lệnh yêu cầu thiết bị mở cửa sổ nhận mã học lệnh từ xa |
+| `ir/<DEVICE_ID>/cmd/ota` | Cloud ➔ Thiết bị | 1 | Lệnh kích hoạt nâng cấp Firmware từ xa qua HTTPS |
+
+### 8.3. Mẫu dữ liệu gói tin (Payload Examples):
+
+* **Nhịp tim trạng thái (`ir/<DEVICE_ID>/status`):**
 ```json
 {
   "state": "online",
@@ -163,7 +178,7 @@ flowchart TD
 }
 ```
 
-* **Environmental Telemetry (`ir/<DEVICE_ID>/dht`):**
+* **Dữ liệu nhiệt độ môi trường (`ir/<DEVICE_ID>/dht`):**
 ```json
 {
   "temp": 28.5,
@@ -171,115 +186,116 @@ flowchart TD
 }
 ```
 
-* **Remote OTA Command (`ir/<DEVICE_ID>/cmd/ota`):**
+* **Lệnh kích hoạt nạp Firmware OTA (`ir/<DEVICE_ID>/cmd/ota`):**
 ```json
 {
   "version": "1.0.3",
   "url": "https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote/releases/download/v1.0.3/firmware.bin",
-  "sha256": "c874b33ad91503e3228a307b99a13b772e008a652a927fa1e5d3fc3c95982855"
+  "sha256": "0cd0f138c708b5b1a363a4deb75d338544e05011a7a1973f1616f73d114b7da1"
 }
 ```
 
 ---
 
-## 9. System Workflows
+## 9. Lưu Đồ Hoạt Động & Quy Trình Xử Lý Hệ Thống
 
-### 9.1 Zero-Brick FOTA Upgrade & Rollback Workflow
+### 9.1. Quy trình Cập nhật FOTA Chống Lỗi (Zero-Brick Rollback Sequence):
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Admin as Operator (Node-RED)
-    participant Broker as EMQX Cloud (MQTTS)
-    participant Device as ESP32-C3 Node
-    participant GitHub as GitHub Releases (HTTPS)
+    actor NguoiDung as Người Vận Hành (Node-RED)
+    participant Broker as EMQX Cloud Broker (TLS)
+    participant ThietBi as Bo Mạch ESP32-C3
+    participant GitHubCDN as Máy Chủ GitHub Releases
     participant Bootloader as 2-Slot OTA Bootloader
 
-    Admin->>Broker: Publish OTA command (URL, version, SHA256)
-    Broker->>Device: Dispatch OTA command on `ir/+/cmd/ota`
-    Device->>Device: Compare target version with running FW_VERSION
-    Device->>GitHub: Open HTTPS Stream with SHA256 Stream Hasher
-    loop Stream Chunks
-        Device->>Device: Write chunk to inactive OTA partition (`app1`)
-        Device->>Device: Update running Fechner LED progress (0% - 100%)
-        Device->>Broker: Publish status (`state: ota_progress`, `info: X%`)
+    NguoiDung->>Broker: Gửi lệnh nâng cấp OTA (Version, URL, SHA256)
+    Broker->>ThietBi: Chuyển phát lệnh đến topic `ir/+/cmd/ota`
+    ThietBi->>ThietBi: So sánh Version đích với FW_VERSION hiện tại
+    ThietBi->>GitHubCDN: Mở luồng kết nối HTTPS tải file firmware.bin
+    loop Đọc và ghi dữ liệu từng khối (Chunk by chunk)
+        ThietBi->>ThietBi: Ghi khối dữ liệu vào phân vùng OTA trống (app1)
+        ThietBi->>ThietBi: Tính toán băm SHA256 lũy tích và cập nhật LED Fechner
+        ThietBi->>Broker: Báo cáo trạng thái (`state: ota_progress`, `info: X%`)
     end
-    Device->>Device: Finalize image hash & verify against expected SHA256
-    alt Hash Matches
-        Device->>Bootloader: Set boot partition to `app1`
-        Device->>Device: Graceful network teardown & Restart
-        Device->>Device: Boot into new firmware; start 180s health countdown
-        Device->>Broker: Connect to MQTT & publish online status
-        Device->>Bootloader: Confirm firmware stability (`markValid()`)
-    else Hash Mismatch or Stream Error
-        Device->>Device: Abort flash write & discard partition
-        Device->>Broker: Publish `state: ota_failed`
+    ThietBi->>ThietBi: Kiểm tra đối chiếu mã SHA256 tính toán với mã được giao
+    alt Mã SHA256 khớp tuyệt đối
+        ThietBi->>Bootloader: Thiết lập phân vùng khởi động tiếp theo sang `app1`
+        ThietBi->>ThietBi: Đóng kết nối mạng an toàn và khởi động lại
+        ThietBi->>ThietBi: Nạp firmware mới; Kích hoạt bộ đếm kiểm định 180 giây
+        ThietBi->>Broker: Đăng nhập mạng thành công và gửi thông điệp `online`
+        ThietBi->>Bootloader: Đánh dấu phân vùng hoạt động hợp lệ (`markValid`)
+    else Mã SHA256 không khớp hoặc mất điện/rớt mạng giữa chừng
+        ThietBi->>ThietBi: Hủy bỏ tiến trình ghi và loại bỏ phân vùng lỗi
+        ThietBi->>Broker: Báo cáo sự cố `state: ota_failed`
+        ThietBi->>Bootloader: Tự động khởi động lại bằng phân vùng cũ an toàn
     end
 ```
 
-### 9.2 Local IR Code Capture & Flash Persistence Workflow
-1. User holds one of the 4 slot buttons (`N1` to `N4`) for 1.5 seconds, or triggers the Learn command from Node-RED.
-2. LED changes to solid Orange and GPIO 8 energizes the VS1838B sensor.
-3. The original remote control is pressed toward the receiver.
-4. The signal is captured: standard protocols (NEC, RC5, etc.) are decoded directly; unknown and extended AC packets are saved as raw pulse-width arrays (up to 700 samples).
-5. Data is committed to LittleFS (`/p<profile>_s<slot>.dat`).
-6. The sensor is powered down (GPIO 8 Low) and LED flashes Green to confirm storage.
+### 9.2. Quy trình Học lệnh Hồng ngoại tại chỗ (Local IR Learning):
+1. Người dùng ấn giữ một trong các nút lệnh (`N1` đến `N4`) trong 1.5 giây hoặc bấm nút *HỌC LỆNH* trên giao diện Node-RED.
+2. Đèn LED RGB chuyển sang màu vàng cam và chân GPIO 8 cấp điện cho mắt thu VS1838B.
+3. Người dùng chĩa remote gốc vào mắt thu và nhấn nút cần sao chép.
+4. Mạch bắt tín hiệu: nếu là mã chuẩn (NEC, Sony, RC5...) mạch sẽ trích xuất mã Hex; nếu là mã điều hòa dạng xung dài, mạch sẽ thu trọn mảng độ rộng xung thô RAW (tối đa 700 phần tử).
+5. Dữ liệu được ghi thẳng vào tệp tin trên bộ nhớ Flash (`/p<profile>_s<slot>.dat`).
+6. Chân GPIO 8 ngắt nguồn mắt thu, đèn LED chớp xanh lá xác nhận học lệnh thành công.
 
 ---
 
-## 10. Project Specifications
+## 10. Bảng Thông Số Kỹ Thuật Dự Án (Specifications)
 
-| Parameter | Value / Range | Notes |
+| Thông số | Giá trị thực tế đạt được | Ghi chú kỹ thuật |
 |:---|:---|:---|
-| **MCU Clock Speed** | 160 MHz | RISC-V Single-Core 32-bit RV32IMC |
-| **SRAM Usage** | ~40 KB (13% of total) | Highly optimized dynamic heap budget |
-| **Flash Partitioning** | 4MB Flash (`min_spiffs.csv`) | `app0` (1.9MB), `app1` (1.9MB), LittleFS (192KB) |
-| **IR Carrier Frequency** | 38 kHz | Industry-standard infrared receiver match |
-| **IR Range** | 7 - 10 meters | Direct line of sight with NPN amplifier |
-| **Sampling Buffer** | 700 raw ticks | Sufficient for multi-byte air conditioner frames |
-| **Operating Voltage** | 5V DC (USB-C) / 3.3V System | ESP32-C3 Super Mini regulator onboard |
-| **Network Latency** | < 120 ms | Cloud MQTT over TLS |
+| **Tần số xung nhịp CPU** | 160 MHz | Vi xử lý 32-bit RISC-V Single-Core |
+| **Mức chiếm dụng bộ nhớ RAM** | ~40 KB (khoảng 12.9% tổng dung lượng) | Bộ nhớ heap tự do luôn duy trì dồi dào |
+| **Phân vùng bộ nhớ Flash** | 4MB Flash (`min_spiffs.csv`) | Gồm `app0` (1.9MB), `app1` (1.9MB), LittleFS (192KB) |
+| **Tần số sóng mang phát IR** | 38 kHz (Chu kỳ xung 50% duty cycle) | Tương thích hầu hết các thiết bị điện dân dụng |
+| **Cự ly điều khiển hồng ngoại** | 7 đến 10 mét | Góc chiếu thẳng trực diện qua thấu kính LED |
+| **Dung lượng đệm xung RAW** | 700 mẫu thời gian xung | Thu nhận toàn vẹn các khung dữ liệu điều hòa đa byte |
+| **Nguồn điện cấp hoạt động** | 5V DC (Cổng USB-C) / 3.3V System | Tích hợp IC ổn áp nguồn xung trên mạch Super Mini |
+| **Độ trễ điều khiển qua Cloud** | Dưới 120 ms | Đo đạc qua kết nối Wi-Fi cáp quang tiêu chuẩn |
 
 ---
 
-## 11. Target Applications
+## 11. Khả Năng Ứng Dụng Thực Tế
 
-* **Retrofit Home Automation:** Upgrades legacy TVs, set-top boxes, and non-smart air conditioners into modern smart home setups without equipment replacement.
-* **Smart Air-Conditioning & Energy Conservation:** Automatically regulates room temperature by cross-referencing DHT11 sensor readings with setpoint rules to send IR cooling/heating commands.
-* **Classroom & Commercial Multimedia Hubs:** Provides centralized remote scheduling for projectors, soundbars, and climate systems across corporate or university campuses.
-
----
-
-## 12. Future Development Roadmap
-
-- [ ] **Dual-Core Protocol Integration:** Implement Matter and Home Assistant native MQTT discovery autoconfiguration.
-- [ ] **Ultra-Low Power Deep Sleep Mode:** Implement PIR motion trigger wakeup on battery power.
-- [ ] **BLE Provisioning:** Add captive portal or Web Bluetooth commissioning for WiFi credentials.
-- [ ] **Hardware PCB Enclosure:** Design a custom 3D-printable injection enclosure with wide-angle 360-degree IR emitter arrays.
+* **Nâng cấp nhà thông minh chi phí thấp:** Biến các thiết bị điện tử gia dụng thế hệ cũ trong gia đình thành thiết bị thông minh kết nối mạng mà không cần thay thế thiết bị gốc.
+* **Tự động hóa phòng khách và phòng ngủ:** Thiết lập kịch bản tự động bật điều hòa khi nhiệt độ môi trường vượt ngưỡng cài đặt trên Node-RED Dashboard.
+* **Quản lý thiết bị tập trung trong trường học và cơ quan:** Cho phép quản trị viên điều khiển tắt mở máy chiếu, quạt trần và hệ thống điều hòa tại các phòng học từ xa, tránh tình trạng quên tắt thiết bị gây lãng phí điện năng.
 
 ---
 
-## 13. Author & Academic Information
+## 12. Kế Hoạch & Lộ Trình Phát Triển Tương Lai
 
-* **Student Name:** Nguyễn Hoàng Đức
-* **GitHub Profile:** [@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc)
-* **Academic Course:** Internet of Things (IoT) Engineering
-* **Instructor:** Thầy Anh Tuấn Nguyễn
-* **Submission Deadline:** November 11, 2026
+- [ ] **Mở rộng giao thức chuẩn Matter / Apple HomeKit:** Tích hợp tương thích trực tiếp với Home Assistant và Google Home qua chuẩn kết nối mới.
+- [ ] **Tối ưu hóa chế độ ngủ sâu (Deep Sleep):** Ứng dụng cảm biến chuyển động PIR để đánh thức vi điều khiển từ trạng thái ngủ sâu, phục vụ mục tiêu chạy bằng pin sạc dung lượng nhỏ.
+- [ ] **Cấu hình mạng không chạm (BLE Provisioning):** Bổ sung tính năng quét mã QR hoặc cấu hình Wi-Fi qua giao tiếp Bluetooth Low Energy tiện lợi.
+- [ ] **Thiết kế vỏ hộp in 3D chuyên dụng:** Thiết kế vỏ bảo vệ thẩm mỹ cao tích hợp cụm phát hồng ngoại 360 độ góc rộng không góc chết.
 
 ---
 
-## 14. License & Confidentiality Notice
+## 13. Thông Tin Tác Giả & Báo Cáo Học Thuật
+
+* **Sinh viên thực hiện:** Nguyễn Hoàng Đức
+* **Tài khoản GitHub:** [@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc)
+* **Lớp / Môn học:** Công nghệ Internet of Things (IoT)
+* **Giảng viên hướng dẫn:** Thầy Anh Tuấn Nguyễn
+* **Hạn nộp báo cáo đề xuất giữa kỳ:** 08:00 ngày 11 tháng 11 năm 2026
+
+---
+
+## 14. Bản Quyền & Chính Sách Mã Nguồn
 
 ```
-PROPRIETARY & ACADEMIC NOTICE
+THÔNG CÁO BẢN QUYỀN HỌC THUẬT & DỰ ÁN
 
-This repository contains the public project design documentation, architectural
-blueprints, and system specifications for academic evaluation and review.
+Kho lưu trữ công khai này (Public Repository) được xuất bản nhằm mục đích phục vụ
+công tác trình bày ý tưởng, thuyết minh đề tài và đánh giá học thuật của môn học.
 
-The underlying proprietary firmware source code, hardware PCB schematics,
-and production cryptographic keys are maintained within a private engineering
-repository in accordance with the enterprise dual-repository security model.
+Toàn bộ tài liệu kiến trúc, sơ đồ khối, đặc tả giao thức và tài nguyên hướng dẫn
+được công khai minh bạch. Mã nguồn triển khai chi tiết phần cứng và các khóa chứng thực
+bảo mật được quản lý độc lập theo mô hình bảo mật hai tầng (Dual-Repository).
 
-© 2026 Nguyen Hoang Duc. All rights reserved.
+© 2026 Nguyễn Hoàng Đức. Toàn quyền bảo lưu.
 ```
