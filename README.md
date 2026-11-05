@@ -1,5 +1,4 @@
 # Remote Hồng Ngoại Đa Năng và Giám Sát Môi Trường Hỗ Trợ FOTA
-*(Universal Smart IR Remote & Climate Monitor with Zero-Brick FOTA)*
 
 [![Nền tảng: ESP32-C3](https://img.shields.io/badge/Ph%E1%BA%A7n%20c%E1%BB%A9ng-ESP32--C3%20Super%20Mini-red.svg)](https://www.espressif.com/)
 [![Môi trường: PlatformIO](https://img.shields.io/badge/Framework-PlatformIO%20%2F%20Arduino-orange.svg)](https://platformio.org/)
@@ -21,7 +20,7 @@
 
 ## 2. Tổng Quan Dự Án
 
-**Universal Smart IR Blaster & Climate Monitor** là thiết bị IoT biên (Edge Device) được phát triển trên vi điều khiển **ESP32-C3 Super Mini Zero**. Dự án giải quyết bài toán kết nối mạng cho các thiết bị điện gia dụng truyền thống (điều hòa không khí, tivi, quạt điện, máy âm thanh, mọi thiết bị sử dụng sóng hồng ngoại) vào hệ sinh thái nhà thông minh mà không cần thay mới phần cứng thiết bị gia dụng.
+**Remote Hồng Ngoại Đa Năng và Giám Sát Môi Trường Hỗ Trợ FOTA** là thiết bị IoT biên (Edge Device) được phát triển trên vi điều khiển **ESP32-C3 Super Mini Zero**. Dự án giải quyết bài toán kết nối mạng cho các thiết bị điện gia dụng truyền thống (điều hòa không khí, tivi, quạt điện, máy âm thanh, mọi thiết bị sử dụng sóng hồng ngoại) vào hệ sinh thái nhà thông minh mà không cần thay mới phần cứng thiết bị gia dụng.
 
 Hệ thống hoạt động đồng thời trên hai chế độ độc lập:
 1. **Hoạt động như remote cầm tay độc lập (không cần mạng):** Thiết bị có sẵn 6 nút bấm vật lý, cho phép sao chép phím bấm từ bất kỳ remote nào trong nhà (Tivi, điều hòa, quạt...). Mã đã học được lưu vĩnh viễn vào bộ nhớ và không mất khi rút điện, giúp người dùng cầm bấm điều khiển ngay tại chỗ bình thường kể cả khi mất mạng Wi-Fi hoặc đứt cáp Internet.
@@ -39,11 +38,11 @@ Hệ thống hoạt động đồng thời trên hai chế độ độc lập:
 
 ### 3.1. Các vấn đề tồn tại trong thực tế:
 1. **Phân mảnh thiết bị điều khiển trong gia đình:**  
-   Mỗi phòng khách hoặc phòng ngủ thường có từ 4 đến 6 chiếc remote khác nhau (remote TV, điều hòa, quạt treo tường, đầu thu kỹ thuật số, loa soundbar...). Việc thất lạc remote, hết pin đột xuất và bừa bộn bàn trà là phiền toái xảy ra hàng ngày.
+   Mỗi phòng khách hoặc phòng ngủ thường có từ 4 đến 6 chiếc remote khác nhau (remote TV, điều hòa, quạt treo tường, đầu thu kỹ thuật số, loa soundbar...). Việc thất lạc remote, hết pin đột xuất là phiền toái xảy ra hàng ngày.
 2. **Lãng phí khi loại bỏ thiết bị cũ:**  
    Hàng triệu máy lạnh và quạt điện thế hệ cũ vẫn hoạt động rất bền bỉ nhưng không có kết nối Wi-Fi. Việc vứt bỏ để mua thiết bị thông minh thế hệ mới gây tốn kém chi phí lớn cho người dùng và tạo ra lượng rác thải điện tử không cần thiết.
-3. **Nguy cơ lỗi "biến thành cục gạch" (Bricking) khi nâng cấp từ xa:**  
-   Các thiết bị IoT DIY hoặc giá rẻ khi nạp firmware qua Wi-Fi (OTA) nếu gặp sự cố chập chờn nguồn, rớt mạng giữa chừng hoặc file nạp bị lỗi cấu hình thường sẽ bị treo vĩnh viễn (brick), buộc người dùng phải tháo vỏ dùng dây nạp cáp USB chuyên dụng để cứu hộ.
+3. **Nguy cơ lỗi "biến thành cục gạch" khi nâng cấp từ xa:**  
+   Các thiết bị IoT DIY hoặc giá rẻ khi nạp firmware qua Wi-Fi (OTA) nếu gặp sự cố chập chờn nguồn, rớt mạng giữa chừng hoặc file nạp bị lỗi cấu hình thường sẽ bị treo vĩnh viễn, buộc người dùng phải tháo vỏ dùng dây nạp cáp USB chuyên dụng để cứu hộ.
 
 ### 3.2. Mục tiêu giải pháp:
 Xây dựng một giải pháp hoàn chỉnh với chi phí linh kiện thấp, kích thước nhỏ gọn bằng bao diêm, hoạt động tin cậy, điều khiển 2 chiều mượt mà và đảm bảo firmware luôn có thể tự phục hồi an toàn trong mọi tình huống triển khai thực tế.
@@ -90,11 +89,11 @@ flowchart TD
 
 ## 5. Tính Năng Kỹ Thuật Đột Phá
 
-* **Điều khiển lai 2 chiều (Hybrid Dual-Control):** Có thể sử dụng như chiếc remote cầm tay độc lập qua 6 nút nhấn hoặc điều khiển qua mạng từ bảng điều khiển Node-RED Dashboard.
+* **Điều khiển lai 2 chiều:** Có thể sử dụng như chiếc remote cầm tay độc lập qua 6 nút nhấn hoặc điều khiển qua mạng từ bảng điều khiển Node-RED Dashboard.
 * **Bộ giải mã và phát xung hồng ngoại vạn năng:** Hỗ trợ giải mã các giao thức dân dụng phổ biến (NEC, Sony SIRC, Philips RC5/6, Samsung) và cơ chế bắt chuỗi xung thô (**RAW pulse train lên tới 700 mẫu xung**) dành cho các dòng máy lạnh phức tạp (Daikin, Panasonic, Mitsubishi, Gree).
-* **Quản trị 4 Profile thiết bị đa năng:** Lưu trữ 4 profile độc lập (Profile 0: Tivi, Profile 1: Điều hòa, Profile 2: Quạt điện, Profile 3: Thiết bị khác). Mỗi profile quản lý 5 nút lệnh (Slot 0 đến Slot 4) lưu trực tiếp vào bộ nhớ flash LittleFS.
+* **Quản trị 4 Profile thiết bị đa năng:** Lưu trữ 4 profile độc lập (Profile 0: Tivi, Profile 1: Điều hòa, Profile 2: Quạt điện, Profile 3: Thiết bị khác). Mỗi profile quản lý 5 nút lệnh (Slot 0 đến Slot 4) lưu trực tiếp vào bộ nhớ flash LittleFS và có thể tăng số lượng Profile.
 * **Cơ chế cấp nguồn thông minh cho mắt thu IR (Power Gating):** Mắt thu hồng ngoại 1838 chỉ được cấp nguồn qua chân GPIO 8 khi kích hoạt chế độ học lệnh (giới hạn thời gian chờ 10 giây). Điều này giúp triệt tiêu hiện tượng nhiễu quang học từ môi trường và tiết kiệm năng lượng.
-* **Cơ chế Cập nhật FOTA Chống Biến Thành Cục Gạch (Zero-Brick Rollback):**
+* **Cơ chế Cập nhật FOTA Chống Biến Thành Cục Gạch:**
   * Tận dụng bảng phân vùng 2 slot OTA (`app0` và `app1`).
   * Tải firmware qua luồng mã hóa HTTPS và tính toán băm SHA256 từng khối dữ liệu trong khi nạp.
   * Chỉ khi mã SHA256 khớp tuyệt đối với tham số chỉ định thì thiết bị mới hoán đổi phân vùng khởi động.
