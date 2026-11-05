@@ -191,7 +191,7 @@ flowchart TD
 {
   "version": "1.0.3",
   "url": "https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote/releases/download/v1.0.3/firmware.bin",
-  "sha256": "0cd0f138c708b5b1a363a4deb75d338544e05011a7a1973f1616f73d114b7da1"
+  "sha256": "48ddcda1d7bb11515f24e3d943512e41818968f64b0c1df7d15c7da778b1f48a"
 }
 ```
 
