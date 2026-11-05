@@ -150,7 +150,22 @@ Bao gồm vi điều khiển ESP32-C3 Super Mini Zero, cảm biến nhiệt đ�
 
 ---
 
-## 7. Công Nghệ Sử Dụng (Technology Stack)
+## 7. Giao Diện Bảng Điều Khiển (Node-RED Dashboard)
+
+Bảng điều khiển trực quan trên nền tảng Web (tương thích máy tính, máy tính bảng và điện thoại thông minh), giao tiếp thời gian thực 2 chiều với thiết bị qua MQTT TLS:
+
+<p align="center">
+  <img src="docs/images/nodered_dashboard.png" alt="Giao diện Node-RED Dashboard" width="750">
+</p>
+
+* **Khối Trạng thái & Nâng cấp FOTA:** Theo dõi trạng thái hoạt động của thiết bị (`online`/`offline`), hỗ trợ nhập trực tiếp thông tin phiên bản (Version), đường dẫn tải firmware (`.bin URL`) và mã kiểm tra SHA256 kèm nút kích hoạt nạp phần mềm từ xa an toàn.
+* **Khối Môi trường (DHT11):** Hiển thị trực quan thông số Nhiệt độ (°C) và Độ ẩm (%) bằng đồng hồ đo (Gauge), kết hợp biểu đồ theo dõi lịch sử biến thiên nhiệt độ phòng theo thời gian thực.
+* **Khối Chọn Profile Thiết bị:** Chuyển đổi linh hoạt giữa 4 nhóm thiết bị (Profile 1: Tivi, Profile 2: Điều hòa, Profile 3: Quạt điện, Profile 4: Khác).
+* **Khối Điều khiển & Học lệnh IR:** Cung cấp cụm 5 phím điều khiển từ xa (N1 – N4, Nút nguồn ON/OFF) và nút bấm kích hoạt mở cửa sổ 10 giây học mã trực tiếp từ remote gốc.
+
+---
+
+## 8. Công Nghệ Sử Dụng (Technology Stack)
 
 * **Ngôn ngữ lập trình:** C++ (nền tảng Arduino / FreeRTOS).
 * **Môi trường phát triển:** PlatformIO trên Visual Studio Code.
@@ -163,7 +178,7 @@ Bao gồm vi điều khiển ESP32-C3 Super Mini Zero, cảm biến nhiệt đ�
 
 ---
 
-## 8. Bảng Thông Số Kỹ Thuật Dự Án
+## 9. Bảng Thông Số Kỹ Thuật Dự Án
 
 | Thông số | Giá trị thực tế đạt được | Ghi chú kỹ thuật |
 |:---|:---|:---|
@@ -178,7 +193,7 @@ Bao gồm vi điều khiển ESP32-C3 Super Mini Zero, cảm biến nhiệt đ�
 
 ---
 
-## 9. Khả Năng Ứng Dụng Thực Tế
+## 10. Khả Năng Ứng Dụng Thực Tế
 
 * **Nâng cấp nhà thông minh chi phí thấp:** Biến các thiết bị điện tử gia dụng thế hệ cũ trong gia đình thành thiết bị thông minh kết nối mạng mà không cần thay thế thiết bị gốc.
 * **Tự động hóa phòng khách và phòng ngủ:** Thiết lập kịch bản tự động bật điều hòa khi nhiệt độ môi trường vượt ngưỡng cài đặt trên Node-RED Dashboard.
@@ -186,7 +201,7 @@ Bao gồm vi điều khiển ESP32-C3 Super Mini Zero, cảm biến nhiệt đ�
 
 ---
 
-## 10. Kế Hoạch & Lộ Trình Phát Triển Tương Lai
+## 11. Kế Hoạch & Lộ Trình Phát Triển Tương Lai
 
 - [ ] **Mở rộng giao thức chuẩn Matter / Apple HomeKit:** Tích hợp tương thích trực tiếp với Home Assistant và Google Home qua chuẩn kết nối mới.
 - [ ] **Tối ưu hóa chế độ ngủ sâu (Deep Sleep):** Ứng dụng cảm biến chuyển động PIR để đánh thức vi điều khiển từ trạng thái ngủ sâu, phục vụ mục tiêu chạy bằng pin sạc dung lượng nhỏ.
