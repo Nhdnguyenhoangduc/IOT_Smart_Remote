@@ -4,7 +4,6 @@
 [![Môi trường: PlatformIO](https://img.shields.io/badge/Framework-PlatformIO%20%2F%20Arduino-orange.svg)](https://platformio.org/)
 [![Giao thức: MQTT TLS](https://img.shields.io/badge/Giao%20th%E1%BB%A9c-MQTT%20TLS%208883-blue.svg)](https://www.emqx.com/)
 [![Dashboard: Node-RED](https://img.shields.io/badge/UI-Node--RED%20Dashboard-red.svg)](https://nodered.org/)
-[![Bản quyền: Đề tài Học thuật](https://img.shields.io/badge/B%E1%BA%A3n%20quy%E1%BB%81n-Academic%20Project-green.svg)](#14-bản-quyền-và-chính-sách-mã-nguồn)
 
 ---
 
@@ -146,104 +145,7 @@ flowchart TD
 
 ---
 
-## 8. Kiến Trúc Truyền Thông & Danh Mục MQTT Topics
-
-### 8.1. Thông số kết nối Cloud Broker:
-* **Địa chỉ Broker:** `xxxx.emqxsl.com` (EMQX Serverless Cloud)
-* **Cổng dịch vụ:** `8883` (Bảo mật TLS có mã hóa)
-* **Định danh Client ID:** Tự động tạo theo định dạng `irb-<MAC_ADDRESS>` duy nhất cho từng bo mạch.
-
-### 8.2. Danh mục Topic định tuyến:
-
-| MQTT Topic | Chiều truyền | Mức QoS | Chức năng chi tiết |
-|:---|:---:|:---:|:---|
-| `ir/<DEVICE_ID>/status` | Thiết bị ➔ Cloud | 1 | Gửi nhịp tim định kỳ, thông số Wi-Fi, bộ nhớ RAM và trạng thái OTA |
-| `ir/<DEVICE_ID>/dht` | Thiết bị ➔ Cloud | 1 | Gửi kết quả đo đạc chu kỳ từ cảm biến nhiệt độ & độ ẩm |
-| `ir/<DEVICE_ID>/learned` | Thiết bị ➔ Cloud | 1 | Báo cáo chi tiết mã lệnh (Giao thức, Hex Code, Bits, Mảng RAW) vừa học |
-| `ir/<DEVICE_ID>/cmd/ir/slot` | Cloud ➔ Thiết bị | 1 | Lệnh kích hoạt phát xung lệnh từ xa theo chỉ mục Slot (0 đến 4) |
-| `ir/<DEVICE_ID>/cmd/ir/profile` | Cloud ➔ Thiết bị | 1 | Lệnh thay đổi Profile thiết bị đang chọn (0 đến 3) |
-| `ir/<DEVICE_ID>/cmd/ir/learn` | Cloud ➔ Thiết bị | 1 | Lệnh yêu cầu thiết bị mở cửa sổ nhận mã học lệnh từ xa |
-| `ir/<DEVICE_ID>/cmd/ota` | Cloud ➔ Thiết bị | 1 | Lệnh kích hoạt nâng cấp Firmware từ xa qua HTTPS |
-
-### 8.3. Mẫu dữ liệu gói tin (Payload Examples):
-
-* **Nhịp tim trạng thái (`ir/<DEVICE_ID>/status`):**
-```json
-{
-  "state": "online",
-  "fw": "1.0.3",
-  "rssi": -51,
-  "heap": 117144,
-  "info": "ready"
-}
-```
-
-* **Dữ liệu nhiệt độ môi trường (`ir/<DEVICE_ID>/dht`):**
-```json
-{
-  "temp": 28.5,
-  "hum": 65.0
-}
-```
-
-* **Lệnh kích hoạt nạp Firmware OTA (`ir/<DEVICE_ID>/cmd/ota`):**
-```json
-{
-  "version": "1.0.3",
-  "url": "https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote/releases/download/v1.0.3/firmware.bin",
-  "sha256": "48ddcda1d7bb11515f24e3d943512e41818968f64b0c1df7d15c7da778b1f48a"
-}
-```
-
----
-
-## 9. Lưu Đồ Hoạt Động & Quy Trình Xử Lý Hệ Thống
-
-### 9.1. Quy trình Cập nhật FOTA Chống Lỗi (Zero-Brick Rollback Sequence):
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor NguoiDung as Người Vận Hành (Node-RED)
-    participant Broker as EMQX Cloud Broker (TLS)
-    participant ThietBi as Bo Mạch ESP32-C3
-    participant GitHubCDN as Máy Chủ GitHub Releases
-    participant Bootloader as 2-Slot OTA Bootloader
-
-    NguoiDung->>Broker: Gửi lệnh nâng cấp OTA (Version, URL, SHA256)
-    Broker->>ThietBi: Chuyển phát lệnh đến topic `ir/+/cmd/ota`
-    ThietBi->>ThietBi: So sánh Version đích với FW_VERSION hiện tại
-    ThietBi->>GitHubCDN: Mở luồng kết nối HTTPS tải file firmware.bin
-    loop Đọc và ghi dữ liệu từng khối (Chunk by chunk)
-        ThietBi->>ThietBi: Ghi khối dữ liệu vào phân vùng OTA trống (app1)
-        ThietBi->>ThietBi: Tính toán băm SHA256 lũy tích
-        ThietBi->>Broker: Báo cáo trạng thái (`state: ota_progress`, `info: X%`)
-    end
-    ThietBi->>ThietBi: Kiểm tra đối chiếu mã SHA256 tính toán với mã được giao
-    alt Mã SHA256 khớp tuyệt đối
-        ThietBi->>Bootloader: Thiết lập phân vùng khởi động tiếp theo sang `app1`
-        ThietBi->>ThietBi: Đóng kết nối mạng an toàn và khởi động lại
-        ThietBi->>ThietBi: Nạp firmware mới; Kích hoạt bộ đếm kiểm định 180 giây
-        ThietBi->>Broker: Đăng nhập mạng thành công và gửi thông điệp `online`
-        ThietBi->>Bootloader: Đánh dấu phân vùng hoạt động hợp lệ (`markValid`)
-    else Mã SHA256 không khớp hoặc mất điện/rớt mạng giữa chừng
-        ThietBi->>ThietBi: Hủy bỏ tiến trình ghi và loại bỏ phân vùng lỗi
-        ThietBi->>Broker: Báo cáo sự cố `state: ota_failed`
-        ThietBi->>Bootloader: Tự động khởi động lại bằng phân vùng cũ an toàn
-    end
-```
-
-### 9.2. Quy trình Học lệnh Hồng ngoại tại chỗ (Local IR Learning):
-1. Người dùng ấn giữ một trong các nút lệnh (`N1` đến `N4`) trong 1.5 giây hoặc bấm nút *HỌC LỆNH* trên giao diện Node-RED.
-2. Đèn LED RGB chuyển sang màu vàng cam và chân GPIO 8 cấp điện cho mắt thu VS1838B.
-3. Người dùng chĩa remote gốc vào mắt thu và nhấn nút cần sao chép.
-4. Mạch bắt tín hiệu: nếu là mã chuẩn (NEC, Sony, RC5...) mạch sẽ trích xuất mã Hex; nếu là mã điều hòa dạng xung dài, mạch sẽ thu trọn mảng độ rộng xung thô RAW (tối đa 700 phần tử).
-5. Dữ liệu được ghi thẳng vào tệp tin trên bộ nhớ Flash (`/p<profile>_s<slot>.dat`).
-6. Chân GPIO 8 ngắt nguồn mắt thu, đèn LED chớp xanh lá xác nhận học lệnh thành công.
-
----
-
-## 10. Bảng Thông Số Kỹ Thuật Dự Án (Specifications)
+## 8. Bảng Thông Số Kỹ Thuật Dự Án
 
 | Thông số | Giá trị thực tế đạt được | Ghi chú kỹ thuật |
 |:---|:---|:---|
@@ -258,7 +160,7 @@ sequenceDiagram
 
 ---
 
-## 11. Khả Năng Ứng Dụng Thực Tế
+## 9. Khả Năng Ứng Dụng Thực Tế
 
 * **Nâng cấp nhà thông minh chi phí thấp:** Biến các thiết bị điện tử gia dụng thế hệ cũ trong gia đình thành thiết bị thông minh kết nối mạng mà không cần thay thế thiết bị gốc.
 * **Tự động hóa phòng khách và phòng ngủ:** Thiết lập kịch bản tự động bật điều hòa khi nhiệt độ môi trường vượt ngưỡng cài đặt trên Node-RED Dashboard.
@@ -266,36 +168,9 @@ sequenceDiagram
 
 ---
 
-## 12. Kế Hoạch & Lộ Trình Phát Triển Tương Lai
+## 10. Kế Hoạch & Lộ Trình Phát Triển Tương Lai
 
 - [ ] **Mở rộng giao thức chuẩn Matter / Apple HomeKit:** Tích hợp tương thích trực tiếp với Home Assistant và Google Home qua chuẩn kết nối mới.
 - [ ] **Tối ưu hóa chế độ ngủ sâu (Deep Sleep):** Ứng dụng cảm biến chuyển động PIR để đánh thức vi điều khiển từ trạng thái ngủ sâu, phục vụ mục tiêu chạy bằng pin sạc dung lượng nhỏ.
 - [ ] **Cấu hình mạng không chạm (BLE Provisioning):** Bổ sung tính năng quét mã QR hoặc cấu hình Wi-Fi qua giao tiếp Bluetooth Low Energy tiện lợi.
 - [ ] **Thiết kế vỏ hộp in 3D chuyên dụng:** Thiết kế vỏ bảo vệ thẩm mỹ cao tích hợp cụm phát hồng ngoại 360 độ góc rộng không góc chết.
-
----
-
-## 13. Thông Tin Tác Giả & Báo Cáo Học Thuật
-
-* **Sinh viên thực hiện:** Nguyễn Hoàng Đức
-* **Tài khoản GitHub:** [@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc)
-* **Môn học:** Phát triển ứng dụng IOT
-* **Giảng viên môn học:** Tiến Sĩ Nguyễn Anh Tuấn
-* **Hạn nộp báo cáo đề xuất giữa kỳ:** 08:00 ngày 11 tháng 11 năm 2026
-
----
-
-## 14. Bản Quyền & Chính Sách Mã Nguồn
-
-```
-THÔNG CÁO BẢN QUYỀN HỌC THUẬT & DỰ ÁN
-
-Kho lưu trữ công khai này (Public Repository) được xuất bản nhằm mục đích phục vụ
-công tác trình bày ý tưởng, thuyết minh đề tài và đánh giá học thuật của môn học.
-
-Toàn bộ tài liệu kiến trúc, sơ đồ khối, đặc tả giao thức và tài nguyên hướng dẫn
-được công khai minh bạch. Mã nguồn triển khai chi tiết phần cứng và các khóa chứng thực
-bảo mật được quản lý độc lập theo mô hình bảo mật hai tầng (Dual-Repository).
-
-© 2026 Nguyễn Hoàng Đức. Toàn quyền bảo lưu.
-```
