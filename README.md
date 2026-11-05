@@ -24,7 +24,7 @@
 **Universal Smart IR Blaster & Climate Monitor** là thiết bị IoT biên (Edge Device) được phát triển trên vi điều khiển **ESP32-C3 Super Mini Zero**. Dự án giải quyết bài toán kết nối mạng cho các thiết bị điện gia dụng truyền thống (điều hòa không khí, tivi, quạt điện, máy âm thanh, mọi thiết bị sử dụng sóng hồng ngoại) vào hệ sinh thái nhà thông minh mà không cần thay mới phần cứng thiết bị gia dụng.
 
 Hệ thống hoạt động đồng thời trên hai chế độ độc lập:
-1. **Remote cầm tay vật lý (Offline Mode):** Trang bị 6 nút bấm cơ học, cho phép học lệnh trực tiếp từ remote gốc và lưu trữ vĩnh viễn vào bộ nhớ Flash. Người dùng có thể cầm bấm điều khiển ngay tại chỗ mà không phụ thuộc vào kết nối Internet.
+1. **Hoạt động như remote cầm tay độc lập (không cần mạng):** Thiết bị có sẵn 6 nút bấm vật lý, cho phép sao chép phím bấm từ bất kỳ remote nào trong nhà (Tivi, điều hòa, quạt...). Mã đã học được lưu vĩnh viễn vào bộ nhớ và không mất khi rút điện, giúp người dùng cầm bấm điều khiển ngay tại chỗ bình thường kể cả khi mất mạng Wi-Fi hoặc đứt cáp Internet.
 2. **Cổng kết nối IoT đám mây:** Đồng bộ qua giao thức MQTT mã hóa TLS (Port 8883) về máy chủ EMQX Cloud. Toàn bộ thao tác giám sát nhiệt độ/độ ẩm từ cảm biến DHT11 và điều khiển thiết bị được quản lý trực quan qua giao diện Node-RED Dashboard trên máy tính và điện thoại thông minh.
 
 Điểm nổi bật của dự án là tính năng **Cập nhật Firmware qua mạng (FOTA)** phục vụ công tác bảo trì, sửa lỗi và nâng cấp, bổ sung các bảng mã điều khiển thiết bị mới hoàn toàn từ xa mà không cần can thiệp phần cứng. Hệ thống tích hợp **cơ chế tự động nạp lại phần mềm cũ (Rollback)** giúp thiết bị không bao giờ bị treo ("biến thành cục gạch") khi quá trình cập nhật gặp sự cố:
