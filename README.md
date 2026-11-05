@@ -1,4 +1,5 @@
-# Universal Smart IR Blaster & Climate Monitor (Zero-Brick FOTA Hub)
+# Remote Hồng Ngoại Đa Năng và Giám Sát Môi Trường Hỗ Trợ FOTA
+*(Universal Smart IR Remote & Climate Monitor with Zero-Brick FOTA)*
 
 [![Nền tảng: ESP32-C3](https://img.shields.io/badge/Ph%E1%BA%A7n%20c%E1%BB%A9ng-ESP32--C3%20Super%20Mini-red.svg)](https://www.espressif.com/)
 [![Môi trường: PlatformIO](https://img.shields.io/badge/Framework-PlatformIO%20%2F%20Arduino-orange.svg)](https://platformio.org/)
@@ -10,10 +11,10 @@
 
 ## 1. Thông Tin Đề Tài
 
-* **Tên đề tài:** Thiết bị Điều khiển Hồng ngoại Thông minh Đa năng 2 Chiều & Giám sát Môi trường Tích hợp Cập nhật Firmware An toàn (Universal Smart IR Blaster & Climate Monitor — Zero-Brick FOTA Hub).
-* **Môn học:** Internet of Things (IoT) — Báo cáo & Đề xuất Đề tài Giữa kỳ (Thang điểm 20).
-* **Sinh viên thực hiện:** Nguyễn Hoàng Đức ([@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc)).
-* **Giảng viên hướng dẫn:** Thầy Anh Tuấn Nguyễn.
+* **Tên đề tài:** Remote Hồng Ngoại Đa Năng và Giám Sát Môi Trường Hỗ Trợ FOTA
+* **Môn học:** Phát triển ứng dụng IOT — Báo cáo & Đề xuất Đề tài Giữa kỳ (Thang điểm 20)
+* **Sinh viên thực hiện:** Nguyễn Hoàng Đức ([@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc))
+* **Giảng viên môn học:** Tiến Sĩ Nguyễn Anh Tuấn
 * **Kho lưu trữ công khai (Public Repo):** [https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote](https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote)
 
 ---
@@ -279,8 +280,8 @@ sequenceDiagram
 
 * **Sinh viên thực hiện:** Nguyễn Hoàng Đức
 * **Tài khoản GitHub:** [@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc)
-* **Lớp / Môn học:** Công nghệ Internet of Things (IoT)
-* **Giảng viên hướng dẫn:** Thầy Anh Tuấn Nguyễn
+* **Môn học:** Phát triển ứng dụng IOT
+* **Giảng viên môn học:** Tiến Sĩ Nguyễn Anh Tuấn
 * **Hạn nộp báo cáo đề xuất giữa kỳ:** 08:00 ngày 11 tháng 11 năm 2026
 
 ---
