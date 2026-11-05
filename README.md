@@ -13,7 +13,7 @@
 * **Tên đề tài:** Remote Hồng Ngoại Đa Năng và Giám Sát Môi Trường Hỗ Trợ FOTA
 * **Môn học:** Phát triển ứng dụng IOT
 * **Sinh viên thực hiện:** Nguyễn Hoàng Đức ([@Nhdnguyenhoangduc](https://github.com/Nhdnguyenhoangduc))
-* **Giảng viên môn học:** Tiến Sĩ Nguyễn Anh Tuấn
+* **Giảng viên môn học:** Nguyễn Anh Tuấn
 * **Kho lưu trữ công khai (Public Repo):** [https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote](https://github.com/Nhdnguyenhoangduc/IOT_Smart_Remote)
 
 ---
