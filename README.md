@@ -53,35 +53,35 @@ Xây dựng một giải pháp hoàn chỉnh với chi phí linh kiện thấp, 
 
 ```mermaid
 flowchart TD
-    subgraph CLOUD_TIER ["☁️ TẦNG ĐÁM MÂY & GIÁM SÁT TRỰC QUAN"]
-        UserClients["💻 Máy tính cá nhân / 📱 Smartphone"] <-->|"WebSockets / HTTP (/ui)"| NodeRED["Node-RED Dashboard Engine"]
+    subgraph CLOUD_TIER ["Tầng Đám Mây & Bảng Điều Khiển"]
+        UserClients["Máy tính cá nhân / Smartphone"] <-->|"WebSockets / HTTP (/ui)"| NodeRED["Node-RED Dashboard Engine"]
         NodeRED <-->|"MQTT qua TLS 8883"| EMQX["EMQX Serverless Cloud Broker"]
         GitHubReleases["GitHub Releases (CDN)"] -.->|"HTTPS Tải firmware.bin"| ESP32Core
     end
 
-    subgraph HARDWARE_TIER ["⚡ THIẾT BỊ PHẦN CỨNG (ESP32-C3 SUPER MINI)"]
+    subgraph HARDWARE_TIER ["Thiết Bị Phần Cứng (ESP32-C3 Super Mini Zero)"]
         NetManager["Network & Security Manager"] <--> FOTAEngine["Anti-Brick FOTA Engine"]
         NetManager <--> IRCtrl["Bộ Xử Lý Hồng Ngoại (IR Core)"]
         NetManager <--> Telemetry["Tác vụ Thu thập Dữ liệu Cảm biến"]
 
-        Telemetry -->|"Giao tiếp 1-Wire (GPIO 9)"| DHTSensor["🌡️ Cảm biến DHT11 (Nhiệt độ & Độ ẩm)"]
+        Telemetry -->|"Giao tiếp 1-Wire (GPIO 9)"| DHTSensor["Cảm biến DHT11 (Nhiệt độ & Độ ẩm)"]
         
-        IRCtrl -->|"Phát xung PWM 38kHz (GPIO 6)"| IRTransmitter["📡 LED Phát IR (Đệm Transistor C828)"]
-        IRReceiver["📻 Mắt nhận IR VS1838B"] -->|"Đọc tín hiệu Data (GPIO 7)"| IRCtrl
+        IRCtrl -->|"Phát xung PWM 38kHz (GPIO 6)"| IRTransmitter["LED Phát IR (Đệm Transistor C828)"]
+        IRReceiver["Mắt nhận IR VS1838B"] -->|"Đọc tín hiệu Data (GPIO 7)"| IRCtrl
         IRCtrl -->|"Đóng ngắt nguồn VCC/GND (GPIO 8)"| IRReceiver
-        IRCtrl <-->|"Hệ thống tập tin LittleFS"| FlashStorage["💾 Lưu trữ 4 Profile x 5 Slot"]
+        IRCtrl <-->|"Hệ thống tập tin LittleFS"| FlashStorage["Lưu trữ 4 Profile x 5 Slot"]
 
-        FOTAEngine -->|"Nắn độ sáng Weber-Fechner (GPIO 10)"| RGBLED["💡 LED RGB WS2812 Onboard"]
+        FOTAEngine -->|"Tín hiệu điều khiển (GPIO 10)"| RGBLED["LED RGB WS2812 Onboard"]
         
-        Buttons["🔘 6 Nút nhấn vật lý (GPIO 4, 3, 2, 1, 5, 0)"] -->|"Chống rung phím / Giữ 1.5s"| BtnManager["Trình Quản Lý Nút Nhấn"]
+        Buttons["6 Nút nhấn vật lý (GPIO 4, 3, 2, 1, 5, 0)"] -->|"Chống rung phím / Giữ 1.5s"| BtnManager["Trình Quản Lý Nút Nhấn"]
         BtnManager --> IRCtrl
     end
 
-    subgraph APPLIANCES ["🏠 THIẾT BỊ ĐIỆN TRONG PHÒNG"]
-        IRTransmitter -.->|"Tia hồng ngoại 940nm"| AC["❄️ Máy lạnh / Điều hòa nhiệt độ"]
-        IRTransmitter -.->|"Tia hồng ngoại 940nm"| TV["📺 Tivi / Màn hình trình chiếu"]
-        IRTransmitter -.->|"Tia hồng ngoại 940nm"| Fan["🌀 Quạt điện"]
-        RealRemote["🎮 Remote gốc của nhà sản xuất"] -.->|"Học mã trực tiếp"| IRReceiver
+    subgraph APPLIANCES ["Thiết Bị Điện Trong Phòng"]
+        IRTransmitter -.->|"Tia hồng ngoại 940nm"| AC["Máy lạnh / Điều hòa nhiệt độ"]
+        IRTransmitter -.->|"Tia hồng ngoại 940nm"| TV["Tivi / Màn hình trình chiếu"]
+        IRTransmitter -.->|"Tia hồng ngoại 940nm"| Fan["Quạt điện"]
+        RealRemote["Remote gốc của nhà sản xuất"] -.->|"Học mã trực tiếp"| IRReceiver
     end
 ```
 
