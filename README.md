@@ -21,11 +21,11 @@
 
 ## 2. Tổng Quan Dự Án
 
-**Universal Smart IR Blaster & Climate Monitor** là thiết bị IoT biên (Edge Device) được phát triển trên vi điều khiển kiến trúc RISC-V **ESP32-C3 Super Mini**. Dự án giải quyết bài toán kết nối mạng cho các thiết bị điện gia dụng truyền thống (điều hòa không khí, tivi, quạt điện, máy âm thanh) vào hệ sinh thái nhà thông minh mà không cần thay mới phần cứng thiết bị gia dụng.
+**Universal Smart IR Blaster & Climate Monitor** là thiết bị IoT biên (Edge Device) được phát triển trên vi điều khiển **ESP32-C3 Super Mini Zero**. Dự án giải quyết bài toán kết nối mạng cho các thiết bị điện gia dụng truyền thống (điều hòa không khí, tivi, quạt điện, máy âm thanh, mọi thiết bị sử dụng sóng hồng ngoại) vào hệ sinh thái nhà thông minh mà không cần thay mới phần cứng thiết bị gia dụng.
 
 Hệ thống hoạt động đồng thời trên hai chế độ độc lập:
-1. **Remote cầm tay vật lý (Offline Mode):** Trang bị 6 nút bấm cơ học, cho phép học lệnh trực tiếp từ remote gốc và lưu trữ vĩnh viễn vào bộ nhớ Flash nội tại (LittleFS). Người dùng có thể cầm bấm điều khiển ngay tại chỗ với độ trễ bằng 0 mà không phụ thuộc vào kết nối Internet.
-2. **Cổng kết nối IoT đám mây (Cloud Gateway Mode):** Đồng bộ liên tục qua giao thức MQTT mã hóa TLS (Port 8883) về máy chủ EMQX Cloud Serverless. Toàn bộ thao tác giám sát nhiệt độ/độ ẩm từ cảm biến DHT11 và điều khiển thiết bị được quản lý trực quan qua giao diện Node-RED Dashboard trên máy tính và điện thoại thông minh.
+1. **Remote cầm tay vật lý (Offline Mode):** Trang bị 6 nút bấm cơ học, cho phép học lệnh trực tiếp từ remote gốc và lưu trữ vĩnh viễn vào bộ nhớ Flash. Người dùng có thể cầm bấm điều khiển ngay tại chỗ mà không phụ thuộc vào kết nối Internet.
+2. **Cổng kết nối IoT đám mây:** Đồng bộ qua giao thức MQTT mã hóa TLS (Port 8883) về máy chủ EMQX Cloud. Toàn bộ thao tác giám sát nhiệt độ/độ ẩm từ cảm biến DHT11 và điều khiển thiết bị được quản lý trực quan qua giao diện Node-RED Dashboard trên máy tính và điện thoại thông minh.
 
 Điểm đột phá của dự án là cơ chế **Cập nhật Firmware qua mạng an toàn (Zero-Brick FOTA)** kết hợp kiểm tra toàn vẹn băm mật mã SHA256, tự động hoàn nguyên (Rollback) khi gặp sự cố, và hiệu ứng chỉ báo trạng thái LED RGB được nắn theo **Định luật sinh lý thị giác Weber-Fechner**.
 
