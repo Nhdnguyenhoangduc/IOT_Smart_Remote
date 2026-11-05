@@ -133,16 +133,16 @@ flowchart TD
 
 ---
 
-## 7. Ngăn Xếp Công Nghệ (Technology Stack)
+## 7. Công Nghệ Sử Dụng (Technology Stack)
 
-* **Ngôn ngữ lập trình:** C++ chuẩn cho hệ thống nhúng (ESP32 Arduino Core 3.x trên nền tảng FreeRTOS).
-* **Môi trường phát triển:** PlatformIO Core trên Visual Studio Code.
-* **Giao thức truyền thông:** MQTT Client (`PubSubClient`) kết hợp với `WiFiClientSecure` (Mã hóa SSL/TLS 1.2/1.3).
-* **Mã hóa xác thực:** Tăng tốc phần cứng MbedTLS SHA-256.
-* **Lưu trữ dữ liệu:** LittleFS Virtual File System trên phân vùng Flash nội tại.
-* **Xử lý tín hiệu IR:** Thư viện mã nguồn mở `IRremoteESP8266` tối ưu cho lõi vi xử lý RISC-V ESP32-C3.
-* **Máy chủ môi giới tin nhắn:** EMQX Serverless Cloud Broker (Cổng bảo mật `8883` MQTTS).
-* **Giao diện điều khiển & Giám sát:** Node-RED Engine và Node-RED Dashboard (`node-red-dashboard`).
+* **Ngôn ngữ lập trình:** C++ (nền tảng Arduino / FreeRTOS).
+* **Môi trường phát triển:** PlatformIO trên Visual Studio Code.
+* **Giao thức truyền thông:** MQTT kết nối bảo mật qua TLS (cổng 8883).
+* **Máy chủ MQTT Broker:** EMQX Cloud.
+* **Giao diện điều khiển & giám sát:** Node-RED Dashboard (xem trên điện thoại, máy tính).
+* **Xử lý tín hiệu hồng ngoại:** Thư viện IRremoteESP8266 (hỗ trợ giải mã và phát xung RAW).
+* **Lưu trữ dữ liệu:** Bộ nhớ Flash nội tại (LittleFS).
+* **Kiểm tra an toàn firmware:** Mã băm SHA-256 chống lỗi file nạp.
 
 ---
 
