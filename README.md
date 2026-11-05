@@ -130,6 +130,24 @@ flowchart TD
 | **Nút Bấm ON/OFF** | `GPIO 5` | INPUT_PULLUP | Nhấn nhanh: Bật/Tắt nguồn thiết bị (Slot 4) |
 | **Nút Bấm FUNC** | `GPIO 0` | INPUT_PULLUP | Chuyển đổi tuần tự Profile thiết bị (0 ➔ 1 ➔ 2 ➔ 3) |
 
+### 6.3. Hình ảnh Phần Cứng Thực Tế
+
+#### Góc nhìn tổng thể mặt trên (Top-down View):
+Bao gồm vi điều khiển ESP32-C3 Super Mini Zero, cảm biến nhiệt độ & độ ẩm DHT11, mắt thu hồng ngoại VS1838B, transistor C828 lái LED phát IR và cụm 6 nút bấm vật lý:
+
+<p align="center">
+  <img src="docs/images/hardware_top_view.jpg" alt="Tổng thể phần cứng thực tế" width="550">
+</p>
+
+#### Các góc nhìn chi tiết và kích thước thực tế trên tay:
+
+| Cầm trên tay thực tế (Góc nghiêng) | Cạnh LED phát hồng ngoại 940nm |
+|:---:|:---:|
+| <img src="docs/images/hardware_handheld.jpg" width="360"> | <img src="docs/images/hardware_side_led.jpg" width="360"> |
+| **Cạnh cổng USB-C & Mắt thu VS1838B** | **Cạnh cảm biến môi trường DHT11** |
+| <img src="docs/images/hardware_side_usb.jpg" width="360"> | <img src="docs/images/hardware_side_dht.jpg" width="360"> |
+
+
 ---
 
 ## 7. Công Nghệ Sử Dụng (Technology Stack)
