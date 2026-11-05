@@ -27,7 +27,11 @@ Hệ thống hoạt động đồng thời trên hai chế độ độc lập:
 1. **Remote cầm tay vật lý (Offline Mode):** Trang bị 6 nút bấm cơ học, cho phép học lệnh trực tiếp từ remote gốc và lưu trữ vĩnh viễn vào bộ nhớ Flash. Người dùng có thể cầm bấm điều khiển ngay tại chỗ mà không phụ thuộc vào kết nối Internet.
 2. **Cổng kết nối IoT đám mây:** Đồng bộ qua giao thức MQTT mã hóa TLS (Port 8883) về máy chủ EMQX Cloud. Toàn bộ thao tác giám sát nhiệt độ/độ ẩm từ cảm biến DHT11 và điều khiển thiết bị được quản lý trực quan qua giao diện Node-RED Dashboard trên máy tính và điện thoại thông minh.
 
-Điểm đột phá của dự án là cơ chế **Cập nhật Firmware qua mạng an toàn (Zero-Brick FOTA)** kết hợp kiểm tra toàn vẹn băm mật mã SHA256, tự động hoàn nguyên (Rollback) khi gặp sự cố, và hiệu ứng chỉ báo trạng thái LED RGB được nắn theo **Định luật sinh lý thị giác Weber-Fechner**.
+Điểm nổi bật của dự án là tính năng **Cập nhật Firmware qua mạng (FOTA)** phục vụ công tác bảo trì, sửa lỗi và nâng cấp, bổ sung các bảng mã điều khiển thiết bị mới hoàn toàn từ xa mà không cần can thiệp phần cứng. Hệ thống tích hợp **cơ chế tự động nạp lại phần mềm cũ (Rollback)** giúp thiết bị không bao giờ bị treo ("biến thành cục gạch") khi quá trình cập nhật gặp sự cố:
+* **Mất kết nối mạng hoặc Wi-Fi chập chờn** giữa chừng trong lúc đang tải firmware.
+* **Mất nguồn điện đột ngột** (sụt áp, mất điện) trong quá trình nạp.
+* **Tệp firmware bị lỗi hoặc bị hỏng** (sai lệch mã kiểm tra toàn vẹn SHA256).
+* **Firmware mới bị crash, treo vòng lặp hoặc không kết nối được Wi-Fi/MQTT:** Sau khi nạp, thiết bị kích hoạt thời gian giám sát an toàn (180 giây); nếu firmware mới gặp lỗi không thể kết nối lại hệ thống, mạch sẽ tự động hủy bỏ và chuyển về chạy bản phần mềm cũ đang hoạt động ổn định trước đó.
 
 ---
 
@@ -95,10 +99,6 @@ flowchart TD
   * Tải firmware qua luồng mã hóa HTTPS và tính toán băm SHA256 từng khối dữ liệu trong khi nạp.
   * Chỉ khi mã SHA256 khớp tuyệt đối với tham số chỉ định thì thiết bị mới hoán đổi phân vùng khởi động.
   * Kích hoạt bộ đếm thời gian an toàn 180 giây sau khởi động: nếu firmware mới bị lỗi crash, tràn bộ nhớ hoặc mất kết nối mạng, bootloader sẽ **tự động hoàn nguyên (Rollback) về bản firmware cũ ổn định trước đó**.
-* **Chỉ báo trực quan LED RGB chuẩn sinh lý thị giác Weber-Fechner:**
-  * Cảm nhận độ sáng của mắt người đối với ánh sáng tuân theo quy luật phi tuyến $S = k \cdot \ln(I)$.
-  * Dự án áp dụng công thức nắn mức độ sáng thực nghiệm: $\text{PWM} = 254 \times (\text{Percent} / 100)^{2.4} + 1$.
-  * Nhờ đó, hiệu ứng LED RGB khi tải tiến độ OTA (0% đến 100%) hoặc nhịp thở trạng thái đạt độ chuyển tiếp tăng sáng cực kỳ mượt mà.
 
 ---
 
@@ -217,7 +217,7 @@ sequenceDiagram
     ThietBi->>GitHubCDN: Mở luồng kết nối HTTPS tải file firmware.bin
     loop Đọc và ghi dữ liệu từng khối (Chunk by chunk)
         ThietBi->>ThietBi: Ghi khối dữ liệu vào phân vùng OTA trống (app1)
-        ThietBi->>ThietBi: Tính toán băm SHA256 lũy tích và cập nhật LED Fechner
+        ThietBi->>ThietBi: Tính toán băm SHA256 lũy tích
         ThietBi->>Broker: Báo cáo trạng thái (`state: ota_progress`, `info: X%`)
     end
     ThietBi->>ThietBi: Kiểm tra đối chiếu mã SHA256 tính toán với mã được giao
