@@ -1,3 +1,9 @@
-.pio/
+.pio
 .vscode/
+*.bin
+*.elf
+*.o
+*.d
+*.a
+*.map
 src/secrets.h
